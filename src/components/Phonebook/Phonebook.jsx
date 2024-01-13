@@ -1,73 +1,70 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import css from './phonebook.module.css';
 
-class Phonebook extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
+const Phonebook = ({ createContact, data }) => {
 
-  handleChange = ({ target }) => {
-    this.setState({
+  const [info, setInfo] = useState({ name: '', number: '' });
+  const { name, number } = info;
+
+  const handleChange = ({ target }) => {
+    setInfo({
+      ...info,
       [target.name]: target.value,
     });
   };
 
-  getInfo = e => {
+  const getInfo = e => {
     e.preventDefault();
-    const normalizeName = this.state.name;
-    const includeName = this.props.data.some(
+    const includeName = data.some(
       contact =>
-        contact.name.toLocaleLowerCase() ===
-        normalizeName.toLocaleLowerCase().trim()
+        contact.name.toLowerCase() === name.toLowerCase().trim()
     );
     if (includeName) {
-      alert(`${normalizeName} is already in contacts`);
+      alert(`${name} is already in contacts`);
     } else {
-      this.props.createContact({
-        name: this.state.name.trim(),
-        number: this.state.number,
+      createContact({
+        name: name.trim(),
+        number: number,
       });
     }
-    this.setState({
+    setInfo({
       name: '',
       number: '',
     });
   };
 
-  render() {
-    return (
-      <form className={css.form} onSubmit={this.getInfo}>
-        <label className={css.titleSmall} htmlFor="name">
-          Name
-        </label>
-        <input
-          className={css.input}
-          type="text"
-          id="name"
-          name="name"
-          required
-          value={this.state.name}
-          onChange={this.handleChange}
-        />
-        <label className={css.titleSmall} htmlFor="number">
-          Number
-        </label>
-        <input
-          className={css.input}
-          type="tel"
-          name="number"
-          id="nomber"
-          required
-          value={this.state.number}
-          onChange={this.handleChange}
-        />
-        <button className={css.button} type="submit">
-          Add contact
-        </button>
-      </form>
-    );
-  }
-}
+  
+  return (
+    <form className={css.form} onSubmit={getInfo}>
+      <label className={css.titleSmall} htmlFor="name">
+        Name
+      </label>
+      <input
+        className={css.input}
+        type="text"
+        id="name"
+        name="name"
+        required
+        value={name}
+        onChange={handleChange}
+      />
+      <label className={css.titleSmall} htmlFor="number">
+        Number
+      </label>
+      <input
+        className={css.input}
+        type="tel"
+        name="number"
+        id="number"
+        required
+        value={number}
+        onChange={handleChange}
+      />
+      <button className={css.button} type="submit">
+        Add contact
+      </button>
+    </form>
+  );
+};
 
 export default Phonebook;

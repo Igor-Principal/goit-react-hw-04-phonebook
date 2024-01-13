@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import css from './contacts.module.css';
 
 const Contacts = ({ data, handleDelete }) => {
+  
   const handleClick = e => {
     handleDelete(e.target.id);
   };

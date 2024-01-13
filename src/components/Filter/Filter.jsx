@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import css from './filter.module.css';
 
 const Filter = ({ filter, onChange }) => {
+  
   return (
     <div className={css.inputContainer}>
       <input
