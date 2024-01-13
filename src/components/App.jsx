@@ -47,6 +47,7 @@ export class App extends Component {
     }));
   };
 
+  
   render() {
     const filteted = this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(this.state.filter.toLocaleLowerCase())
